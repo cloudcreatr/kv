@@ -1,4 +1,4 @@
-// .wrangler/tmp/bundle-9cUXBU/checked-fetch.js
+// .wrangler/tmp/bundle-mE1Cux/checked-fetch.js
 var urls = /* @__PURE__ */ new Set();
 function checkURL(request, init) {
   const url = request instanceof URL ? request : new URL(
@@ -45,7 +45,7 @@ function __facade_invoke__(request, env, ctx, dispatch, finalMiddleware) {
   ]);
 }
 
-// .wrangler/tmp/pages-1JgVPS/bundledWorker-0.05500258468709851.mjs
+// .wrangler/tmp/pages-gxsXXy/bundledWorker-0.7932854112682723.mjs
 var urls2 = /* @__PURE__ */ new Set();
 function checkURL2(request, init) {
   const url = request instanceof URL ? request : new URL(
@@ -93,17 +93,27 @@ var worker_default = {
   async fetch(request, env, ctx) {
     let url = new URL(request.url);
     if (url.searchParams.has("set")) {
-      await env.kv.put("om", url.searchParams.get("set"));
-      const start2 = performance.now();
-      const value2 = await env.kv.get("om", { cacheTtl: 60 });
-      const stop2 = performance.now();
-      console.log("same data center timing", stop2 - start2);
-      return new Response(`updated hello ${value2}`);
+      return new Response(`updated hello ${value}`, {
+        headers: {
+          "set-cookie": "om=om; path=/; secure; httponly; samesite=strict"
+        }
+      });
     }
-    const start = performance.now();
-    const value = await env.kv.get("om", { cacheTtl: 60 });
-    const stop = performance.now();
-    console.log("cache around the world timing", stop - start);
+    function getCookieValue(cookieString2, cookieName) {
+      if (!cookieString2) {
+        return null;
+      }
+      let cookies = cookieString2.split("; ");
+      for (let i = 0; i < cookies.length; i++) {
+        let cookiePair = cookies[i].split("=");
+        if (cookiePair[0] === cookieName) {
+          return cookiePair[1];
+        }
+      }
+      return null;
+    }
+    const cookieString = request.headers.get("cookie");
+    const value = getCookieValue(cookieString, "om");
     return new Response(`hello ${value}`);
   }
 };
@@ -246,7 +256,7 @@ var jsonError2 = async (request, env, _ctx, middlewareCtx) => {
 var middleware_miniflare3_json_error_default2 = jsonError2;
 var wrap2 = void 0;
 
-// .wrangler/tmp/bundle-9cUXBU/middleware-insertion-facade.js
+// .wrangler/tmp/bundle-mE1Cux/middleware-insertion-facade.js
 var envWrappers2 = [wrap2].filter(Boolean);
 var facade3 = {
   ...middleware_loader_entry_default,
@@ -258,7 +268,7 @@ var facade3 = {
 };
 var middleware_insertion_facade_default2 = facade3;
 
-// .wrangler/tmp/bundle-9cUXBU/middleware-loader.entry.ts
+// .wrangler/tmp/bundle-mE1Cux/middleware-loader.entry.ts
 var __Facade_ScheduledController__2 = class {
   constructor(scheduledTime, cron, noRetry) {
     this.scheduledTime = scheduledTime;
@@ -346,4 +356,4 @@ var middleware_loader_entry_default2 = facade4;
 export {
   middleware_loader_entry_default2 as default
 };
-//# sourceMappingURL=bundledWorker-0.05500258468709851.js.map
+//# sourceMappingURL=bundledWorker-0.7932854112682723.js.map

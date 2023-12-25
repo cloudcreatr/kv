@@ -1,4 +1,4 @@
-// .wrangler/tmp/bundle-5PNPfT/checked-fetch.js
+// .wrangler/tmp/bundle-TTrYuz/checked-fetch.js
 var urls = /* @__PURE__ */ new Set();
 function checkURL(request, init) {
   const url = request instanceof URL ? request : new URL(
@@ -50,17 +50,27 @@ var worker_default = {
   async fetch(request, env, ctx) {
     let url = new URL(request.url);
     if (url.searchParams.has("set")) {
-      await env.kv.put("om", url.searchParams.get("set"));
-      const start2 = performance.now();
-      const value2 = await env.kv.get("om", { cacheTtl: 60 });
-      const stop2 = performance.now();
-      console.log("same data center timing", stop2 - start2);
-      return new Response(`updated hello ${value2}`);
+      return new Response(`updated hello ${value}`, {
+        headers: {
+          "set-cookie": "om=om; path=/; secure; httponly; samesite=strict"
+        }
+      });
     }
-    const start = performance.now();
-    const value = await env.kv.get("om", { cacheTtl: 60 });
-    const stop = performance.now();
-    console.log("cache around the world timing", stop - start);
+    function getCookieValue(cookieString2, cookieName) {
+      if (!cookieString2) {
+        return null;
+      }
+      let cookies = cookieString2.split("; ");
+      for (let i = 0; i < cookies.length; i++) {
+        let cookiePair = cookies[i].split("=");
+        if (cookiePair[0] === cookieName) {
+          return cookiePair[1];
+        }
+      }
+      return null;
+    }
+    const cookieString = request.headers.get("cookie");
+    const value = getCookieValue(cookieString, "om");
     return new Response(`hello ${value}`);
   }
 };
@@ -88,7 +98,7 @@ var jsonError = async (request, env, _ctx, middlewareCtx) => {
 var middleware_miniflare3_json_error_default = jsonError;
 var wrap = void 0;
 
-// .wrangler/tmp/bundle-5PNPfT/middleware-insertion-facade.js
+// .wrangler/tmp/bundle-TTrYuz/middleware-insertion-facade.js
 var envWrappers = [wrap].filter(Boolean);
 var facade = {
   ...worker_default,
@@ -100,7 +110,7 @@ var facade = {
 };
 var middleware_insertion_facade_default = facade;
 
-// .wrangler/tmp/bundle-5PNPfT/middleware-loader.entry.ts
+// .wrangler/tmp/bundle-TTrYuz/middleware-loader.entry.ts
 var __Facade_ScheduledController__ = class {
   constructor(scheduledTime, cron, noRetry) {
     this.scheduledTime = scheduledTime;
@@ -188,4 +198,4 @@ var middleware_loader_entry_default = facade2;
 export {
   middleware_loader_entry_default as default
 };
-//# sourceMappingURL=bundledWorker-0.05500258468709851.mjs.map
+//# sourceMappingURL=bundledWorker-0.7932854112682723.mjs.map
