@@ -41,7 +41,7 @@ export default {
       const value = url.searchParams.get("set");
       return new Response(`updated hello ${value}`, {
         headers: {
-          "set-cookie": `om=${value}; path=/; secure; httponly; samesite=lax`,
+          "set-cookie": `om=${value}; path=/`,
         },
       });
     }
