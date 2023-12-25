@@ -1,5 +1,3 @@
-import { performance } from 'perf_hooks';
-
 
 export default {
     async fetch(request, env, ctx) {
