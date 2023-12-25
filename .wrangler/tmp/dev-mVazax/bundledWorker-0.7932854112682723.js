@@ -89,28 +89,29 @@ function __facade_invoke__2(request, env, ctx, dispatch, finalMiddleware) {
     finalMiddleware
   ]);
 }
+function getCookieValue(cookieString, cookieName) {
+  if (!cookieString) {
+    return null;
+  }
+  let cookies = cookieString.split("; ");
+  for (let i = 0; i < cookies.length; i++) {
+    let cookiePair = cookies[i].split("=");
+    if (cookiePair[0] === cookieName) {
+      return cookiePair[1];
+    }
+  }
+  return null;
+}
 var worker_default = {
-  async fetch(request, env, ctx) {
+  async fetch(request) {
     let url = new URL(request.url);
     if (url.searchParams.has("set")) {
-      return new Response(`updated hello ${value}`, {
+      const value2 = url.searchParams.get("set");
+      return new Response(`updated hello ${value2}`, {
         headers: {
-          "set-cookie": "om=om; path=/; secure; httponly; samesite=strict"
+          "set-cookie": `om=${value2}; path=/; secure; httponly; samesite=strict`
         }
       });
-    }
-    function getCookieValue(cookieString2, cookieName) {
-      if (!cookieString2) {
-        return null;
-      }
-      let cookies = cookieString2.split("; ");
-      for (let i = 0; i < cookies.length; i++) {
-        let cookiePair = cookies[i].split("=");
-        if (cookiePair[0] === cookieName) {
-          return cookiePair[1];
-        }
-      }
-      return null;
     }
     const cookieString = request.headers.get("cookie");
     const value = getCookieValue(cookieString, "om");
