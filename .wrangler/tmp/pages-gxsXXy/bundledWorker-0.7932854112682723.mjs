@@ -1,4 +1,4 @@
-// .wrangler/tmp/bundle-1dAmuw/checked-fetch.js
+// .wrangler/tmp/bundle-oOf2oy/checked-fetch.js
 var urls = /* @__PURE__ */ new Set();
 function checkURL(request, init) {
   const url = request instanceof URL ? request : new URL(
@@ -66,7 +66,7 @@ var worker_default = {
       const value2 = url.searchParams.get("set");
       return new Response(`updated hello ${value2}`, {
         headers: {
-          "set-cookie": `om=${value2}; path=/; secure; httponly; samesite=strict`
+          "set-cookie": `om=${value2}; path=/; secure; httponly;`
         }
       });
     }
@@ -99,7 +99,7 @@ var jsonError = async (request, env, _ctx, middlewareCtx) => {
 var middleware_miniflare3_json_error_default = jsonError;
 var wrap = void 0;
 
-// .wrangler/tmp/bundle-1dAmuw/middleware-insertion-facade.js
+// .wrangler/tmp/bundle-oOf2oy/middleware-insertion-facade.js
 var envWrappers = [wrap].filter(Boolean);
 var facade = {
   ...worker_default,
@@ -111,7 +111,7 @@ var facade = {
 };
 var middleware_insertion_facade_default = facade;
 
-// .wrangler/tmp/bundle-1dAmuw/middleware-loader.entry.ts
+// .wrangler/tmp/bundle-oOf2oy/middleware-loader.entry.ts
 var __Facade_ScheduledController__ = class {
   constructor(scheduledTime, cron, noRetry) {
     this.scheduledTime = scheduledTime;

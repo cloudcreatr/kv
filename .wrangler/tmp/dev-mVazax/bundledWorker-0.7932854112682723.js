@@ -109,7 +109,7 @@ var worker_default = {
       const value2 = url.searchParams.get("set");
       return new Response(`updated hello ${value2}`, {
         headers: {
-          "set-cookie": `om=${value2}; path=/; secure; httponly; samesite=strict`
+          "set-cookie": `om=${value2}; path=/; secure; httponly;`
         }
       });
     }
